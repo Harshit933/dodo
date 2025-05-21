@@ -36,6 +36,5 @@ pub struct AuthResponse {
 #[derive(Debug, Serialize)]
 pub struct RegisterResponse {
     pub message: String,
-    pub token: String,
     pub user: User,
 } 

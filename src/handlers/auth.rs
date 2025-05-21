@@ -1,15 +1,13 @@
-use axum::{
-    extract::State,
-    http::StatusCode,
-    Json,
-};
+use axum::extract::State;
+use axum::http::StatusCode;
+use axum::Json;
 use bcrypt::{hash, verify, DEFAULT_COST};
 use jsonwebtoken::{encode, EncodingKey, Header};
 use serde::{Deserialize, Serialize};
 use sqlx::PgPool;
 use uuid::Uuid;
 use time::OffsetDateTime;
-use tracing::{info, error};
+use tracing::error;
 use std::env;
 
 use crate::models::user::{User, CreateUser, LoginUser, AuthResponse, RegisterResponse};
@@ -94,23 +92,9 @@ pub async fn register_user(
         }
     };
 
-    // Generate JWT
-    tracing::info!("Generating JWT token");
-    let token = match generate_token(&user.id) {
-        Ok(token) => {
-            tracing::info!("JWT token generated successfully");
-            token
-        },
-        Err(e) => {
-            tracing::error!("Failed to generate JWT token: {:?}", e);
-            return Err(e);
-        }
-    };
-
     tracing::info!("Registration completed successfully for user: {}", user.email);
     Ok(Json(RegisterResponse {
         message: "User registered successfully".to_string(),
-        token,
         user,
     }))
 }

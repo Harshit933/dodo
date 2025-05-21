@@ -1,8 +1,7 @@
 use axum::Router;
 use axum::routing::{get, post};
 use axum::middleware;
-use axum::http::{HeaderValue, HeaderName, StatusCode};
-use axum::response::{IntoResponse, Response};
+use axum::http::{HeaderValue, StatusCode};
 use axum::extract::State;
 use tokio::net::TcpListener;
 use sqlx::postgres::PgPoolOptions;
@@ -15,13 +14,6 @@ use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, EnvFilte
 
 mod models;
 mod handlers;
-
-// Custom error handler
-async fn error_handler(err: axum::Error) -> impl IntoResponse {
-    let error_message = format!("Internal Server Error: {}", err);
-    tracing::error!("{}", error_message);
-    (StatusCode::INTERNAL_SERVER_ERROR, error_message)
-}
 
 // Logging middleware
 async fn logging_middleware(
