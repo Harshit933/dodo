@@ -1,10 +1,27 @@
 [package]
 name = "dodo"
 version = "0.1.0"
-edition = "2024"
+edition = "2021"
 
 [dependencies]
 axum = "0.8.4"
 tokio = { version = "1.45.0", features = ["full"] }
-sqlx = { version = "0.7", features = ["runtime-tokio", "tls-rustls", "postgres", "uuid", "time", "migrate"] }
+sqlx = { version = "0.8.6", features = ["runtime-tokio", "tls-rustls", "postgres", "uuid", "time", "migrate", "bigdecimal"] }
 dotenvy = "0.15"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+dotenv = "0.15"
+bcrypt = "0.15"
+jsonwebtoken = "9.2"
+uuid = { version = "1.0", features = ["v4", "serde"] }
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "limit", "sensitive-headers", "trace"] }
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+time = { version = "0.3", features = ["serde", "macros"] }
+bigdecimal = { version = "0.4", features = ["serde"] }
+tower_governor = "0.7"
+
+[dev-dependencies]
+tokio-test = "0.4"
+tower = { version = "0.4", features = ["util"] }
